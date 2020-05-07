@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] float runSpeed = 5f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float climbSpeed = 4f;
+    [SerializeField] float acceleration = 1.5f;
 
     //State
     bool isAlive = true;
@@ -31,26 +32,45 @@ public class Player : MonoBehaviour
     void Update()
     {
         Run();
-        Jump();
+        JumpValidation();
         FlipSprite();
         Climb();
     }
 
     private void Run()
     {
-        
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); // value is between -1 and 1
-        Vector2 playerVelocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
-        myRigidBody.velocity = playerVelocity;
+        //Vector2 playerVelocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
 
+        if (Input.GetKey("left shift"))
+        {
+            myRigidBody.velocity = new Vector2(controlThrow * runSpeed * acceleration, myRigidBody.velocity.y);
+        }
+
+        else
+        {
+            myRigidBody.velocity = new Vector2(controlThrow * runSpeed, myRigidBody.velocity.y);
+        }
+        
         bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
         myAnimator.SetBool("Running", playerHasHorizontalSpeed);
     }
 
-    private void Jump()
+    private void JumpValidation()
     {
         if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
-        { return; }
+        {
+            if (myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+            {
+                Jump();
+            }
+            return;
+        }
+        Jump();
+    }
+
+    private void Jump()
+    {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Vector2 jumpVelocityToAdd = new Vector2(0f, jumpSpeed);
@@ -73,11 +93,15 @@ public class Player : MonoBehaviour
         {
             
             float controlThrow = CrossPlatformInputManager.GetAxis("Vertical"); // value is between -1 and 1
-            Vector2 playerVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
-            myRigidBody.velocity = playerVelocity;
+            if (controlThrow != 0)
+            {
+                Vector2 playerVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
+                myRigidBody.velocity = playerVelocity;
 
-            bool playerHasVerticalSpeed = Mathf.Abs(myRigidBody.velocity.y) > Mathf.Epsilon;
-            myAnimator.SetBool("Climbing", playerHasVerticalSpeed);
+                bool playerHasVerticalSpeed = Mathf.Abs(myRigidBody.velocity.y) > Mathf.Epsilon;
+                myAnimator.SetBool("Climbing", playerHasVerticalSpeed);
+            }
+            
         }
         else
         {
