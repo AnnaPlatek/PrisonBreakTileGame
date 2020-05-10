@@ -14,18 +14,24 @@ public class Player : MonoBehaviour
 
     //State
     bool isAlive = true;
+    bool climbingState = false;
 
     //Cached Component
     Rigidbody2D myRigidBody;
     Animator myAnimator;
     Collider2D myCollider2D;
+    Transform myTransform;
+    float gravityScaleAtStart;
     
     // Start is called before the first frame update
     void Start()
     {
+        myTransform = GetComponent<Transform>();
         myRigidBody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         myCollider2D = GetComponent<Collider2D>();
+        gravityScaleAtStart = myRigidBody.gravityScale;
+        climbingState = false;
     }
 
     // Update is called once per frame
@@ -35,6 +41,7 @@ public class Player : MonoBehaviour
         JumpValidation();
         FlipSprite();
         Climb();
+        ShowPosition();
     }
 
     private void Run()
@@ -73,6 +80,7 @@ public class Player : MonoBehaviour
     {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
+            ReleaseLadder();
             Vector2 jumpVelocityToAdd = new Vector2(0f, jumpSpeed);
             myRigidBody.velocity += jumpVelocityToAdd;
         }
@@ -89,24 +97,56 @@ public class Player : MonoBehaviour
 
     private void Climb()
     {
-        if (myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        //todo: stop climbing when you are at the top of ladder
+        //todo: stop moving left and ringt on ladder
+        //todo: automatically release the ladder when you touch the ground
+        
+        float controlThrow = CrossPlatformInputManager.GetAxis("Vertical"); // value is between -1 and 1
+        if (myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")) && controlThrow != 0)
         {
-            
-            float controlThrow = CrossPlatformInputManager.GetAxis("Vertical"); // value is between -1 and 1
+            climbingState = true;  
+        }
+        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladder")))
+        {
+            ReleaseLadder();
+        }
+
+        if (climbingState == true)
+        {
             if (controlThrow != 0)
             {
+                myRigidBody.gravityScale = 0f;
                 Vector2 playerVelocity = new Vector2(myRigidBody.velocity.x, controlThrow * climbSpeed);
                 myRigidBody.velocity = playerVelocity;
 
                 bool playerHasVerticalSpeed = Mathf.Abs(myRigidBody.velocity.y) > Mathf.Epsilon;
                 myAnimator.SetBool("Climbing", playerHasVerticalSpeed);
             }
-            
+            else if (controlThrow == 0)
+            {
+                //myTransform.transform.position = new Vector2();
+                //climbSpeed = 0f;
+                myRigidBody.gravityScale = 0f;
+                Vector2 playerVelocity = new Vector2(myRigidBody.velocity.x, 0f);
+                myRigidBody.velocity = playerVelocity;
+
+                return;
+            }
+
         }
-        else
-        {
-            myAnimator.SetBool("Climbing", false);
-        }
+        
+    }
+
+    private void ReleaseLadder()
+    {
+        climbingState = false;
+        myAnimator.SetBool("Climbing", false);
+        myRigidBody.gravityScale = gravityScaleAtStart;
+    }
+
+    private void ShowPosition()
+    {
+        Debug.Log(myTransform.transform.position); 
     }
 
 
