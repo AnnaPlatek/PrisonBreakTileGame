@@ -6,10 +6,12 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 1f;
     Rigidbody2D enemyRigidBody2D;
+    BoxCollider2D enemyPeriscope;
     // Start is called before the first frame update
     void Start()
     {
         enemyRigidBody2D = GetComponent<Rigidbody2D>();
+        enemyPeriscope = GetComponent<BoxCollider2D>();
         
     }
 
