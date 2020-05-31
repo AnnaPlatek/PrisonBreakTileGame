@@ -19,7 +19,7 @@ TagManager:
   - Background
   - Enemy
   - Hazards
-  - 
+  - Door
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 2521958975
+    locked: 0
+  - name: Door
+    uniqueID: 599254881
     locked: 0
   - name: Player
     uniqueID: 958145843
