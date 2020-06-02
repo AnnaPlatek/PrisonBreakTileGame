@@ -191,24 +191,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52271793}
   m_CullTransparentMesh: 0
---- !u!1 &184254254 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3035574813731397487, guid: 2730f92500a405348b8a355e07e5253b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5367291505616092433}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &184254255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184254254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc9f88c2ea996945a510afac29cc630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &194418590
 GameObject:
   m_ObjectHideFlags: 0
@@ -7964,6 +7946,15 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 184254255, guid: 2730f92500a405348b8a355e07e5253b, type: 3}
+      propertyPath: coinPickUpSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 143fe5a87fdcc2648bc0528d688ffb9a, type: 3}
+    - target: {fileID: 4244298470187488934, guid: 2730f92500a405348b8a355e07e5253b,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2730f92500a405348b8a355e07e5253b, type: 3}
