@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Levels/Level2.unity
     guid: e144109c849e45c4e8f2dad90899897d
   - enabled: 1
+    path: Assets/Levels/Level3.unity
+    guid: 3b0992d532af43c4aacff5be1ba853b0
+  - enabled: 1
     path: Assets/Levels/WinScreen.unity
     guid: 7b543c5f25c374d45832893c3d3f00dc
   m_configObjects: {}
