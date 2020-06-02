@@ -7947,15 +7947,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 184254255, guid: 2730f92500a405348b8a355e07e5253b, type: 3}
-      propertyPath: coinPickUpSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 143fe5a87fdcc2648bc0528d688ffb9a, type: 3}
-    - target: {fileID: 4244298470187488934, guid: 2730f92500a405348b8a355e07e5253b,
-        type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2730f92500a405348b8a355e07e5253b, type: 3}
 --- !u!1001 &5472005488069711764
